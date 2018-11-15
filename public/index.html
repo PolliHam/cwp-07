@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" content="text/javascript">
+
+    <title>Статьи</title>
+
+    <link rel="stylesheet" type="text/css" href="site.css">
+    <script src="index.js"></script>
+    <script async src="../index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        let flag = false;
+        let change;
+    </script>
+</head>
+<body>
+
+<script>
+    writeArticles("date", "desk", "1", "5", true);
+</script>
+
+<form onsubmit="">
+    <input type="radio" name="change" value="date" checked/> Дата
+    <input type="radio" name="change" value="title"/> Название
+    <input type="radio" name="change" value="author"/> Автор
+    <br>
+    <input type="radio" name="sort" value="asc"/> По возрастанию
+    <input type="radio" name="sort" value="desc" checked/> По убыванию
+
+
+    <br><input type="number" name="pages" value="1" min="1"/><br>
+    <button type="button" onclick="
+    for (iter of document.getElementsByName('change'))
+    {
+        if(iter.checked)
+        {
+            change = iter;
+        }
+    }
+    let sort = document.getElementsByName('sort')[0].checked ? 'asc' : 'desc';
+    let count = document.getElementsByName('pages')[0].value;
+    document.body.innerHTML = docBody;
+    writeArticles(
+        change.value,
+        sort,
+        count,
+        '5',
+        true
+    );
+">Сортировать
+    </button>
+    <br>
+</form>
+
+<script>
+    const docBody = document.body.innerHTML;
+    flag = true;
+</script>
+
+</body>
