@@ -8,5 +8,5 @@ module.exports =  function deleteArticle(req, res, payload, cb) {
     }else{
         return handle_errors.invalidRequest(req, res, payload, cb);
     }
-    cb(null, articles);
+    cb(null, articles, 'application/json');
 };

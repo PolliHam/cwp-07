@@ -9,6 +9,7 @@ module.exports = function createArticle(req, res, payload, cb){
         "author":payload.author,
         "comments":[]
     };
+    console.log('dfdfd');
     articles.push(new_article);
     const result = { new_article: new_article};
 

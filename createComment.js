@@ -15,5 +15,5 @@ module.exports = function createComment(req, res, payload, cb) {
     }else{
         return handle_errors.invalidRequest(req, res, payload, cb);
     }
-    cb(null, articles[index]);
+    cb(null, articles[index], 'application/json');
 };

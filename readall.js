@@ -19,7 +19,13 @@ function sort(value, ord) {
 
 function compareValue(value, order){
     if(value==="date") {
-        newArticles.sort((a, b) => { return (Date.parse(b[value]) - Date.parse(a[value])) * order;});
+
+        newArticles.sort((a, b) => {
+            console.log(Date.parse(b[value]));
+            console.log(Date.parse(a[value]));
+            return (Date.parse(b[value]) - Date.parse(a[value])) * order;
+        }
+        );
     }
     else if (value==="id"){
         newArticles.sort((a, b)=>{return (b[value] - a[value])*order;});
@@ -88,6 +94,7 @@ function getCorrectLimit(){
 module.exports = function readAll(req, res, payload, cb) {
     newArticles = JSON.parse(JSON.stringify(articles));
     thPayload = payload;
+    console.log('jhbjh');
     if( sort(payload.sortField || "date", payload.sortOrder || "desc" ) &&
       paginate() &&
       includeComments(payload.includeDeps || "false"))

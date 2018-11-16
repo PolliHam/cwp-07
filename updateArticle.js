@@ -12,5 +12,5 @@ module.exports = function update(req, res, payload, cb) {
         articles[index].date = payload.data;
         articles[index].author = payload.author;
     }
-    cb(null, articles[index]);
+    cb(null, articles[index], 'application/json');
 };

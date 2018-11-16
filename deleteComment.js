@@ -10,5 +10,5 @@ module.exports =  function deleteComment(req, res, payload, cb) {
         console.log(articleId + index);
         return handle_errors.invalidRequest(req, res, payload, cb);
     }
-    cb(null, articles[articleId]);
+    cb(null, articles[articleId], 'application/json');
 };
