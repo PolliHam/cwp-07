@@ -81,6 +81,7 @@ function parseBodyJson(req, cb) {
         if (body !== ""){
             params = JSON.parse(body);
         }
+        console.log(params);
         cb(null, params);
     });
 }

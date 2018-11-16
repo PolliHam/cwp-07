@@ -12,5 +12,5 @@ module.exports = function createArticle(req, res, payload, cb){
     articles.push(new_article);
     const result = { new_article: new_article};
 
-    cb(null, result);
+    cb(null, result, 'application/json');
 };
