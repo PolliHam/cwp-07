@@ -92,7 +92,7 @@ module.exports = function readAll(req, res, payload, cb) {
       paginate() &&
       includeComments(payload.includeDeps || "false"))
    {
-       cb(null, modifyResult());
+       cb(null, modifyResult(),'application/json');
    }
    else{
         return handle_errors.invalidRequest(req, res, payload, cb);

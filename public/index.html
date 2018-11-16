@@ -2,60 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" content="text/javascript">
-
     <title>Статьи</title>
-
-    <link rel="stylesheet" type="text/css" href="site.css">
-    <script src="index.js"></script>
-    <script async src="../index.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-        let flag = false;
-        let change;
-    </script>
+
+    <script src="form.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Articles</a>
+        </div>
+        <ul class="nav navbar-nav">
+         <li class="active"><a href="#">Main</a></li>
+         <li><a href="form.html">Add new</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="alert alert-info">
+    <h2 >Articles</h2>
+</div>
+
+    <div class="form-group">
+        <div>
+            <h3>Sort by</h3>
+            <select id="sortBy" class="btn btn-info dropdown-toggle">
+                <option value="date" >date</option>
+                <option value="title" >title</option>
+                <option value="author" >author</option>
+            </select>
+        </div>
+        <div>
+            <h3>Sort type</h3>
+            <select id="sortType" class="btn btn-info dropdown-toggle">
+                <option value="asc" >asc</option>
+                <option value="desc" >desc</option>
+            </select>
+        </div>
 
 <script>
-    writeArticles("date", "desk", "1", "5", true);
+    writeArticles("date", "asc", "1", "5", "true");
 </script>
 
-<form onsubmit="">
-    <input type="radio" name="change" value="date" checked/> Дата
-    <input type="radio" name="change" value="title"/> Название
-    <input type="radio" name="change" value="author"/> Автор
-    <br>
-    <input type="radio" name="sort" value="asc"/> По возрастанию
-    <input type="radio" name="sort" value="desc" checked/> По убыванию
-
-
-    <br><input type="number" name="pages" value="1" min="1"/><br>
-    <button type="button" onclick="
-    for (iter of document.getElementsByName('change'))
-    {
-        if(iter.checked)
-        {
-            change = iter;
-        }
-    }
-    let sort = document.getElementsByName('sort')[0].checked ? 'asc' : 'desc';
-    let count = document.getElementsByName('pages')[0].value;
-    document.body.innerHTML = docBody;
-    writeArticles(
-        change.value,
-        sort,
-        count,
-        '5',
-        true
-    );
-">Сортировать
-    </button>
-    <br>
-</form>
-
-<script>
-    const docBody = document.body.innerHTML;
-    flag = true;
-</script>
-
+        <br><input type="number" name="pages" value="1" min="1"/><br>
+        <br><button class="btn btn-info" onclick="
+        console.log('jfkvndkjv');
+        let change = $('#sortBy option:selected').text();
+        let sort = $('#sortType option:selected').text()
+        let count = document.getElementsByName('pages')[0].value;
+        writeArticles( change, sort, count.toString(), '5', 'true');">Show</button>
+    </div>
+<div id="articleList">
+</div>
 </body>

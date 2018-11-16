@@ -1,5 +1,5 @@
 const http = require('http');
-
+let articles = require('./articles');
 const helper = require('./helper');
 const sum = require('./sum');
 const readall = require('./readall');
@@ -10,9 +10,9 @@ const deleteArticle = require('./deleteArticle');
 const createComment = require('./createComment');
 const deleteComment = require('./deleteComment');
 const logs = require('./logs');
-const cssFiles = require('./renderCSS');
-const jsFiles = require('./renderJS');
-const htmlFiles = require('./renderHTML');
+const cssFiles = require('./readerCSS');
+const jsFiles = require('./readerJS');
+const htmlFiles = require('./readerHTML');
 const hostname = '127.0.0.1';
 const port = 3000;
 
@@ -37,19 +37,23 @@ const handlers = {
 const server = http.createServer((req, res) => {
     parseBodyJson(req, (err, payload) => {
         const handler = getHandler(req.url);
-
-        handler(req, res, payload, (err, result) => {
+        console.log(req.url);
+        handler(req, res, payload, (err, result, format) => {
             if (err) {
                 res.statusCode = err.code;
                 res.setHeader('Content-Type', 'application/json');
-                res.end( JSON.stringify(err) );
-            }
-            else {
-                //helper.updateArticles();
+                res.end(JSON.stringify(err));
+                return;
+            }else{
+                helper.updateArticles('articles.json', articles);
                 helper.logger(req.url, payload);
+                res.setHeader('Content-Type', format);
                 res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify(result));
+                if(format === 'application/json'){
+                    res.end(JSON.stringify(result));
+                }else{
+                    res.end(result);
+                }
             }
         });
     });
@@ -72,8 +76,11 @@ function parseBodyJson(req, cb) {
     req.on('data', function(chunk) {
         body.push(chunk);
     }).on('end', function() {
+        let params = '';
         body = Buffer.concat(body).toString();
-        let params = JSON.parse(body);
+        if (body !== ""){
+            params = JSON.parse(body);
+        }
         cb(null, params);
     });
 }
