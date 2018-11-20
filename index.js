@@ -37,7 +37,6 @@ const handlers = {
 const server = http.createServer((req, res) => {
     parseBodyJson(req, (err, payload) => {
         const handler = getHandler(req.url);
-        console.log(req.url);
         handler(req, res, payload, (err, result, format) => {
             if (err) {
                 res.statusCode = err.code;

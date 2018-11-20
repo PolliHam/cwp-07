@@ -3,6 +3,7 @@ const handle_errors = require('./handleERRORS');
 let newArticles = [];
 let thPayload;
 const ERROR = 0;
+let countItems =0;
 
 function sort(value, ord) {
 
@@ -21,8 +22,6 @@ function compareValue(value, order){
     if(value==="date") {
 
         newArticles.sort((a, b) => {
-            console.log(Date.parse(b[value]));
-            console.log(Date.parse(a[value]));
             return (Date.parse(b[value]) - Date.parse(a[value])) * order;
         }
         );
@@ -68,7 +67,7 @@ function paginate(){
 
 
 function modifyResult(){
-    return { "items": newArticles, "meta":{"page": getCorrectPage(),"pages":  Math.ceil(newArticles.length/getCorrectLimit()),
+   return { "items": newArticles, "meta":{"page": getCorrectPage(),"pages":  Math.ceil(countItems/getCorrectLimit()),
             "count": newArticles.length,"limit": getCorrectLimit()}};
 }
 
@@ -93,8 +92,8 @@ function getCorrectLimit(){
 
 module.exports = function readAll(req, res, payload, cb) {
     newArticles = JSON.parse(JSON.stringify(articles));
+    countItems=newArticles.length;
     thPayload = payload;
-    console.log('jhbjh');
     if( sort(payload.sortField || "date", payload.sortOrder || "desc" ) &&
       paginate() &&
       includeComments(payload.includeDeps || "false"))

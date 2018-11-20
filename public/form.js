@@ -1,3 +1,6 @@
+
+
+
 function writeArticles(sortField, sortOrder, page, limit, includeDeps)
 {
     $.post("../api/articles/readall", JSON.stringify({
@@ -45,14 +48,47 @@ function createList()
 
 function createArticle() {
     const date = new Date();
-    console.log('hhh');
-    $.post('../api/articles/create', JSON.stringify({
-            'title':$('#articleTitle').val(),
-            'text': $('#articleText').val(),
-            'author': $('#articleAuthor').val(),
-            'date': `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
-        }), (err, msg, data) => {
-            window.location.replace('../');
-        }
-    );
+    console.log($('#articleTitle').val());
+    if ( $('#articleTitle').val() === '')
+        $("#noTitle").html("no title");
+    else
+        $("#noTitle").html("");
+
+    if ( $('#articleText').val() === '')
+        $("#noText").html("no text");
+    else
+        $("#noText").html("");
+
+    if ( $('#articleAuthor').val() === '')
+        $("#noAuthor").html("no author");
+    else
+        $("#noAuthor").html("");
+
+    if($('#articleTitle').val() != '' && $('#articleText').val() != '' && $('#articleAuthor').val() != '') {
+        let format = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDay()).slice(-2);
+        $.post('../api/articles/create', JSON.stringify({
+                'title': $('#articleTitle').val(),
+                'text': $('#articleText').val(),
+                'author': $('#articleAuthor').val(),
+                'date': format
+            }), (err, msg, data) => {
+                if (err != null) {
+                    window.location.replace('../');
+                }
+            }
+        );
+    }
+
+}
+
+function maxNumber() {
+    $.post("../api/articles/readall", JSON.stringify({
+        "limit": "5"
+    }), (err, msg, data) =>
+    {
+        data = data.responseJSON;
+        let pages = data.meta.pages;
+        document.getElementById("number1").max = data.meta.pages;
+        console.log(pages);
+    });
 }

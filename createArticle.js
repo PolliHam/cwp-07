@@ -5,11 +5,10 @@ module.exports = function createArticle(req, res, payload, cb){
     let new_article = {"id": helper.random_id(),
         "title":payload.title,
         "text":payload.text,
-        "date":payload.data,
+        "date":payload.date,
         "author":payload.author,
         "comments":[]
     };
-    console.log('dfdfd');
     articles.push(new_article);
     const result = { new_article: new_article};
 
